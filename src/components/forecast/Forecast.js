@@ -6,9 +6,7 @@ import { getWeather } from "../../api/api";
 import { res } from "../../api/mockdata";
 
 const Forecast = () => {
-  const [city, setCity] = useState(
-    "Coordinates: 47.417620899999996 , 23.105154499999998"
-  );
+  const [city, setCity] = useState("Coordinates: 47.41 , 23.10");
   const classes = useStyles();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -23,9 +21,9 @@ const Forecast = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         setCity(
           "Coordinates: " +
-            position.coords.latitude.toString() +
+            position.coords.latitude.toFixed(2).toString() +
             " , " +
-            position.coords.longitude.toString()
+            position.coords.longitude.toFixed(2).toString()
         );
         getWeatherData(
           position.coords.latitude.toString(),

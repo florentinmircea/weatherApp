@@ -1,12 +1,23 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Typography, useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 import { WiRaindrops, WiDaySunny, WiDayCloudyHigh } from "weather-icons-react";
 
 const DayComponent = (props) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <div className={classes.root}>
-      <div>{props.data.time.substr(0, 3)}</div>
-      <div>{props.data.time.substr(3, 10)}</div>
+      <div>
+        <Typography variant={isSmallScreen === true ? "h5" : "h4"}>
+          {props.data.time.substr(0, 3)}
+        </Typography>
+      </div>
+      <div>
+        <Typography variant={isSmallScreen === true ? "h6" : "h6"}>
+          {props.data.time.substr(3, 10)}
+        </Typography>
+      </div>
       <div>
         {props.data.icon === "rain" ? (
           <WiRaindrops size={100} color="#000" />
@@ -19,11 +30,13 @@ const DayComponent = (props) => {
         ) : null}
       </div>
       <div>
-        {"Min:" +
-          props.data.temperatureMin +
-          "°C Max:" +
-          props.data.temperatureMax +
-          "°C"}
+        <Typography variant={isSmallScreen === true ? "h6" : "h6"}>
+          {"Min:" +
+            props.data.temperatureMin +
+            "°C Max:" +
+            props.data.temperatureMax +
+            "°C"}
+        </Typography>
       </div>
       <div>{props.data.summary}</div>
     </div>
