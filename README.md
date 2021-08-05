@@ -1,3 +1,4 @@
+# Simple weather app React Js
 # Project is up and running https://florentinmircea.github.io/weatherApp/
 # Getting Started with Create React App
 
