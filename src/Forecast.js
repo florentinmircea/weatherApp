@@ -16,14 +16,15 @@ const Forecast = () => {
 
   useEffect(() => {
     setForecast([]);
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position.coords.latitude);
-      console.log(position.coords.longitude);
-      getWeatherData(
-        position.coords.latitude.toString(),
-        position.coords.longitude.toString()
-      );
-    });
+    getWeatherData("47.417620899999996", "23.105154499999998");
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        getWeatherData(
+          position.coords.latitude.toString(),
+          position.coords.longitude.toString()
+        );
+      });
+    }
   }, []);
 
   const getWeatherData = async (latitude, longitude) => {
@@ -38,7 +39,6 @@ const Forecast = () => {
       aux = "";
       aux = forecast[i];
       var readableDate = new Date(parseInt(aux.time) * 1000);
-      console.log(readableDate.toString());
       aux.time = readableDate.toString().substr(0, 10);
       aux.temperatureMin =
         Math.round((aux.temperatureMin - 32) * 0.5556 * 10) / 10;
@@ -61,39 +61,7 @@ const Forecast = () => {
           {city}
         </Typography>
       </div>
-      <div className={classes.days}>
-        {daysElements}
-        {/* <DayComponent
-          dayName="Monday"
-          temperature="23"
-          date="August 2"
-          condition="clear sky"
-        />
-        <DayComponent
-          dayName="Tuesday"
-          temperature="25"
-          date="August 2"
-          condition="clear sky"
-        />
-        <DayComponent
-          dayName="Wednesday"
-          temperature="27"
-          date="August 2"
-          condition="clear sky"
-        />
-        <DayComponent
-          dayName="Thursday"
-          temperature="29"
-          date="August 2"
-          condition="clear sky"
-        />
-        <DayComponent
-          dayName="Friday"
-          temperature="20"
-          date="August 2"
-          condition="clear sky"
-        /> */}
-      </div>
+      <div className={classes.days}>{daysElements}</div>
     </div>
   );
 };
@@ -103,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#e9ecef",
     marginLeft: "15%",
     marginRight: "15%",
     marginTop: "100px",

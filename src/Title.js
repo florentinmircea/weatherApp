@@ -11,7 +11,6 @@ const Title = () => {
         <Typography variant={isSmallScreen === true ? "h5" : "h1"}>
           5-Day Forecast
         </Typography>
-        {/* {console.log(isSmallScreen)} */}
       </div>
     </div>
   );

@@ -18,10 +18,10 @@ export const getWeather = async (latitude, longitude) => {
   return axios
     .request(options)
     .then(function (response) {
-      console.log(response.data);
       return response.data;
     })
     .catch(function (error) {
+      //throw new Error(error);
       console.error(error);
     });
 };
