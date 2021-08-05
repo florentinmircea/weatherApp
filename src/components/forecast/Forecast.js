@@ -6,7 +6,9 @@ import { getWeather } from "../../api/api";
 import { res } from "../../api/mockdata";
 
 const Forecast = () => {
-  const [city, setCity] = useState("Odoreu");
+  const [city, setCity] = useState(
+    "Coordinates: 47.417620899999996 , 23.105154499999998"
+  );
   const classes = useStyles();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -19,6 +21,12 @@ const Forecast = () => {
     getWeatherData("47.417620899999996", "23.105154499999998");
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
+        setCity(
+          "Coordinates: " +
+            position.coords.latitude.toString() +
+            " , " +
+            position.coords.longitude.toString()
+        );
         getWeatherData(
           position.coords.latitude.toString(),
           position.coords.longitude.toString()
@@ -28,12 +36,12 @@ const Forecast = () => {
   }, []);
 
   const getWeatherData = async (latitude, longitude) => {
-    // const response = await getWeather(latitude, longitude);
+    const response = await getWeather(latitude, longitude);
     // console.log(response);
     let aux;
     forecast.length = 0;
     for (let i = 0; i < 5; i++) {
-      forecast.push(res.data.forecast[i]);
+      forecast.push(response.data.forecast[i]);
     }
     for (let i = 0; i < 5; i++) {
       aux = "";
