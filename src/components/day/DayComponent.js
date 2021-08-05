@@ -1,11 +1,8 @@
-import { makeStyles, useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core";
 import { WiRaindrops, WiDaySunny, WiDayCloudyHigh } from "weather-icons-react";
 
 const DayComponent = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <div className={classes.root}>
       <div>{props.data.time.substr(0, 3)}</div>
