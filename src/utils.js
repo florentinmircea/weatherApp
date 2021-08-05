@@ -1,19 +1,25 @@
 import axios from "axios";
 
-export const getWeather = (city) => {
+export const getWeather = async (latitude, longitude) => {
   const options = {
     method: "GET",
-    url: "https://community-open-weather-map.p.rapidapi.com/climate/month",
-    params: { q: city },
+    url: "https://api.ambeedata.com/weather/forecast/by-lat-lng",
+    params: {
+      lat: latitude,
+      lng: longitude,
+      filter: "daily",
+    },
     headers: {
-      "x-rapidapi-key": "a9d9eae688msh88c1202706454f3p198ab5jsn2e7585f82f98",
-      "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
+      "x-api-key":
+        "947b9b73582363d9338944201e557ed162de714f21693bb847720566ce19d0ae",
+      "Content-type": "application/json",
     },
   };
-  axios
+  return axios
     .request(options)
     .then(function (response) {
       console.log(response.data);
+      return response.data;
     })
     .catch(function (error) {
       console.error(error);

@@ -7,11 +7,16 @@ const DayComponent = (props) => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <div className={classes.root}>
-      <div>{props.dayName}</div>
-      <div>{props.date}</div>
-      <div>icon</div>
-      <div>{props.temperature}</div>
-      <div>{props.condition}</div>
+      <div>{props.data.time.substr(0, 3)}</div>
+      <div>{props.data.time.substr(3, 10)}</div>
+      <div>{props.data.icon}</div>
+      <div>
+        {"Min:" +
+          props.data.temperatureMin +
+          " Max:" +
+          props.data.temperatureMax}
+      </div>
+      <div>{props.data.summary}</div>
     </div>
   );
 };
