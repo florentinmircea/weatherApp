@@ -1,9 +1,9 @@
 import { makeStyles, Typography, useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
-import DayComponent from "./DayComponent";
-import { getWeather } from "./utils";
-import { res } from "./mockdata";
+import DayComponent from "../day/DayComponent";
+import { getWeather } from "../../api/api";
+import { res } from "../../api/mockdata";
 
 const Forecast = () => {
   const [city, setCity] = useState("Odoreu");
@@ -47,7 +47,7 @@ const Forecast = () => {
       forecast[i] = aux;
     }
     setActualData(forecast);
-    console.log(forecast);
+    // console.log(forecast);
   };
 
   const daysElements = actualData?.map((item) => (

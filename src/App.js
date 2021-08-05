@@ -1,8 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
-import DayComponent from "./DayComponent";
-import Title from "./Title";
-import Forecast from "./Forecast";
+import Title from "./components/title/Title";
+import Forecast from "./components/forecast/Forecast";
 
 function App() {
   return (
