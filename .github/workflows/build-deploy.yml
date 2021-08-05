@@ -20,4 +20,4 @@ jobs:
       - name: Install NPM packages
         run: npm install
       - run: CI=false npm run build
-      - run: npm run deploy
+      - run: CI=false npm run deploy
