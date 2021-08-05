@@ -36,12 +36,12 @@ const Forecast = () => {
   }, []);
 
   const getWeatherData = async (latitude, longitude) => {
-    const response = await getWeather(latitude, longitude);
+    //const response = await getWeather(latitude, longitude);
     // console.log(response);
     let aux;
     forecast.length = 0;
     for (let i = 0; i < 5; i++) {
-      forecast.push(response.data.forecast[i]);
+      forecast.push(res.data.forecast[i]);
     }
     for (let i = 0; i < 5; i++) {
       aux = "";

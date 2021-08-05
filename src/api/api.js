@@ -21,7 +21,6 @@ export const getWeather = async (latitude, longitude) => {
       return response.data;
     })
     .catch(function (error) {
-      //throw new Error(error);
-      console.error(error);
+      throw new Error(error);
     });
 };
