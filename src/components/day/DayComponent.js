@@ -1,13 +1,14 @@
 import { makeStyles, Typography, useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { WiRaindrops, WiDaySunny, WiDayCloudyHigh } from "weather-icons-react";
+import Card from "@material-ui/core/Card";
 
 const DayComponent = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <div className={classes.root}>
+    <Card className={classes.root} onClick={props.onClick}>
       <div>
         <Typography variant={isSmallScreen === true ? "h5" : "h4"}>
           {props.data.time.substr(0, 3)}
@@ -39,7 +40,7 @@ const DayComponent = (props) => {
         </Typography>
       </div>
       <div>{props.data.summary}</div>
-    </div>
+    </Card>
   );
 };
 
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "5px 5px 5px 5px",
     border: "2px solid #ededed",
     gridGap: "5px",
+    cursor: "pointer",
   },
 }));
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import DayComponent from "../day/DayComponent";
 import { getWeather } from "../../api/api";
 import { res } from "../../api/mockdata";
+import InfoDialog from "../dialog/InfoDialog";
 
 const Forecast = () => {
   const [city, setCity] = useState("");
@@ -12,10 +13,25 @@ const Forecast = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [forecast, setForecast] = useState([]);
   const [actualData, setActualData] = useState([]);
-  let id = 0;
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(0);
+
+  const handleClickOpen = (val) => {
+    setOpen(true);
+    setValue(val);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
-    setForecast([]);
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const load = () => {
+    // setForecast([]);
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         setCity(
@@ -30,7 +46,7 @@ const Forecast = () => {
         );
       });
     }
-  }, []);
+  };
 
   const getWeatherData = async (latitude, longitude) => {
     const response = await getWeather(latitude, longitude);
@@ -45,6 +61,14 @@ const Forecast = () => {
       aux = forecast[i];
       var readableDate = new Date(parseInt(aux.time) * 1000);
       aux.time = readableDate.toString().substr(0, 10);
+      var readableSunrise = new Date(parseInt(aux.sunriseTime) * 1000);
+      var hours = readableSunrise.getHours();
+      var minutes = "0" + readableSunrise.getMinutes();
+      aux.sunriseTime = hours + ":" + minutes.substr(-2);
+      var readableSunset = new Date(parseInt(aux.sunsetTime) * 1000);
+      var hours = readableSunset.getHours();
+      var minutes = "0" + readableSunset.getMinutes();
+      aux.sunsetTime = hours + ":" + minutes.substr(-2);
       aux.temperatureMin =
         Math.round((aux.temperatureMin - 32) * 0.5556 * 10) / 10;
       aux.temperatureMax =
@@ -55,8 +79,12 @@ const Forecast = () => {
     // console.log(forecast);
   };
 
-  const daysElements = actualData?.map((item) => (
-    <DayComponent data={item} key={id++} />
+  const daysElements = actualData?.map((item, index) => (
+    <DayComponent
+      data={item}
+      key={index}
+      onClick={() => handleClickOpen(index)}
+    />
   ));
 
   const errorDiv = (
@@ -90,6 +118,11 @@ const Forecast = () => {
       </div>
       <div className={classes.days}>
         {daysElements.length !== 0 ? daysElements : errorDiv}
+        <InfoDialog
+          data={actualData[value]}
+          open={open}
+          onClose={handleClose}
+        />
       </div>
     </div>
   );
