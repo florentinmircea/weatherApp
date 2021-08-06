@@ -6,7 +6,7 @@ import { getWeather } from "../../api/api";
 import { res } from "../../api/mockdata";
 
 const Forecast = () => {
-  const [city, setCity] = useState("Coordinates: 47.41 , 23.10");
+  const [city, setCity] = useState("");
   const classes = useStyles();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -16,7 +16,6 @@ const Forecast = () => {
 
   useEffect(() => {
     setForecast([]);
-    getWeatherData("47.417620899999996", "23.105154499999998");
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         setCity(
@@ -34,12 +33,12 @@ const Forecast = () => {
   }, []);
 
   const getWeatherData = async (latitude, longitude) => {
-    //const response = await getWeather(latitude, longitude);
+    const response = await getWeather(latitude, longitude);
     // console.log(response);
     let aux;
     forecast.length = 0;
     for (let i = 0; i < 5; i++) {
-      forecast.push(res.data.forecast[i]);
+      forecast.push(response.data.forecast[i]);
     }
     for (let i = 0; i < 5; i++) {
       aux = "";
@@ -60,6 +59,28 @@ const Forecast = () => {
     <DayComponent data={item} key={id++} />
   ));
 
+  const errorDiv = (
+    <div>
+      <Typography variant={isSmallScreen === true ? "h5" : "h4"}>
+        {
+          "If you are seeing this, your browser does not have access to your location."
+        }
+      </Typography>
+      <br />
+      <Typography variant={isSmallScreen === true ? "h5" : "h4"}>
+        {
+          "If you are using iOS this can be solved by going into Settings > Privacy > Location Services > Safari > Ask next time."
+        }
+      </Typography>
+      <br />
+      <Typography variant={isSmallScreen === true ? "h5" : "h4"}>
+        {
+          "If you are using Android this can be solved by going into Settings > Apps > Browser App > Permissions > Location > Ask everytime."
+        }
+      </Typography>
+    </div>
+  );
+
   return (
     <div className={classes.root}>
       <div className={classes.location}>
@@ -67,7 +88,9 @@ const Forecast = () => {
           {city}
         </Typography>
       </div>
-      <div className={classes.days}>{daysElements}</div>
+      <div className={classes.days}>
+        {daysElements.length !== 0 ? daysElements : errorDiv}
+      </div>
     </div>
   );
 };
